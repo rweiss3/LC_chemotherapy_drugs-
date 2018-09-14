@@ -38,16 +38,16 @@ cp /home/wheelerlab3/Data/LCL_chemotherapy/bimbam_files/CEU.TGP_and_imputed.rmBA
           View(pheno)
           CEU <- subset(pheno, pop == "CEU")
           View(CEU)
-          pheno_CEU_araclog2IC50 <- CEU[, 1:13]
-          View(pheno_CEU_araclog2IC50)
-          write.table(pheno_CEU_araclog2IC50, file = "pheno_CEU_araclog2IC50.txt", sep = "\t")
+          --> pheno_CEU_araclog2IC50 <- CEU[, 1:13]
+          --> View(pheno_CEU_araclog2IC50)
+          --> write.table(pheno_CEU_araclog2IC50, file = "pheno_CEU_araclog2IC50.txt", sep = "\t")
         ##Without header/IDs (create for use)
-          pheno_CEU_araclog2IC50_noids <- pheno_CEU_araclog2IC50[, 5:13]
-          View(pheno_CEU_araclog2IC50_noids)
-          write.table(pheno_CEU_araclog2IC50_noids, file = "pheno_CEU_araclog2IC50_noids.txt", sep = "\t", row.names = F, col.names = F)
+          --> pheno_CEU_araclog2IC50_noids <- pheno_CEU_araclog2IC50[, 5:13]
+          --> View(pheno_CEU_araclog2IC50_noids)
+          --> write.table(pheno_CEU_araclog2IC50_noids, file = "pheno_CEU_araclog2IC50_noids.txt", sep = "\t", row.names = F, col.names = F)
 	  
 #Run Gemma
-    gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno.gz -p pheno_CEU_araclog2IC50_noids.txt -gk 1 -o CEU_relationship_matrix
+    gemma -g CEU.TGP_and_imputed.rmBAD.20130526.snp.info.gz -p pheno_CEU_araclog2IC50_noids.txt -gk 1 -o CEU_relationship_matrix
         
     ## Next must order phenotype file to match order of genotype file
     fam <- read.table("/home/rachel/LCL_chemotherapy/CEU.chr10.TGP_and_imputed.20130416.exclude_BAD_SNPs.fam")
