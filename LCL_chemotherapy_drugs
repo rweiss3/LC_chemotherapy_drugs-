@@ -30,7 +30,7 @@ cp /home/wheelerlab3/Data/LCL_chemotherapy/bimbam_files/CEU.TGP_and_imputed.rmBA
 	#genotype file (need bimbam format): CEU.TGP_and_imputed.rmBAD.20130526.snp.info.gz 
 	#phenotype file: using master toxicity file 
 	
-#Create Phenotype File In R	
+---> #Create Phenotype File In R	
 	#To Make Phenotype File in R, using CEU with only one phenotype 
     	#no header, no IDs for .txt for gemma
     	##With header/IDs (create for reference)
