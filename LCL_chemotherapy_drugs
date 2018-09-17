@@ -53,6 +53,16 @@ cp /home/wheelerlab3/Data/LCL_chemotherapy/master_cytotoxicity_info_130311_plus_
 #Run Gemma to calculate estimated realtedness matrix 
 
 cp /home/rachel/pheno_CEU_ARAClog2IC50_noIDs.txt /home/rachel/LCL_chemotherapy 
-----> gemma -g CEU.TGP_and_imputed.rmBAD.20130526.snp.info.gz -p pheno_CEU_ARAClog2IC50_noIDs.txt -gk 1 -o CEU_relationship_matrix
+gemma -g CEU.TGP_and_imputed.rmBAD.20130526.snp.info.gz -p pheno_CEU_ARAClog2IC50_noIDs.txt -gk 1 -o CEU_relationship_matrix
 #error to open phenotype file 
+
+## Need to order phenotype file to match genotype file in R 
+        fam <- read.table("/home/rachel/LCL_chemotherapy/CEU.chr10.TGP_and_imputed.20130416.exclude_BAD_SNPs.fam")
+        colnames(fam) <- c("FID", "IID", "FatID", "MatID", "Sex", "Pheno")
+        pheno <- read.table("/home/home/rachel/LCL_chemotherapy/pheno_CEU_ARAClog2IC50.txt")
+        pheno_ordered <- left_join(fam, pheno, by = c("FID" = "V1", "IID" = "V2"))
+        write.table(pheno_ordered, "/home/rachel/LCL_chemotherapy/ordered_pheno_CEU_ARAClog2IC50.txt", col.names = T, row.names = T, sep = "/t")
+    # Need to create a file with no IDs or col names to use gemma 
+        pheno_ordered_noIDs <- pheno_ordered[, 10:17]
+        write.table(pheno_ordered_noids, "/home/rachel/LCL_chemotherapy/ordered_pheno_CEU_ARAClog2IC50_noIDs.txt", col.names = F, row.names = F, sep = "/t")
         
