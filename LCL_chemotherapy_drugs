@@ -21,35 +21,39 @@ ls
 	CEU.TGP_and_imputed.rmBAD.20130526.snp.info.gz 
 	CEU.chr10.TGP_and_imputed.20130416.exclude_BAD_SNPs.fam
 #Move files into home/rachel/LCL_chemotherapy 
+	# cp file location and name then to where the file is going 
+	
 cp /home/wheelerlab3/Data/LCL_chemotherapy/bimbam_files/CEU.chr10.TGP_and_imputed.20130416.exclude_BAD_SNPs.fam /home/rachel/LCL_chemotherapy
 cp /home/wheelerlab3/Data/LCL_chemotherapy/bimbam_files/CEU.TGP_and_imputed.rmBAD.20130526.geno.gz  /home/rachel/LCL_chemotherapy
 cp /home/wheelerlab3/Data/LCL_chemotherapy/bimbam_files/CEU.TGP_and_imputed.rmBAD.20130526.snp.info.gz /home/rachel/LCL_chemotherapy
+cp /home/wheelerlab3/Data/LCL_chemotherapy/master_cytotoxicity_info_130311_plus_igrowth.txt /home/rachel/LCL_chemotherapy
 
 #Create a Relationship Matrix in gemma. Need the genotype file and phenotype files 
 	gemma -g gentoype.gz -p phenotype.txt -gk 1 -o output_name 
 	#genotype file (need bimbam format): CEU.TGP_and_imputed.rmBAD.20130526.snp.info.gz 
 	#phenotype file: using master toxicity file 
 	
----> #Create Phenotype File In R	
+#Create Phenotype File In R	
 	#To Make Phenotype File in R, using CEU with only one phenotype 
     	#no header, no IDs for .txt for gemma
-    	##With header/IDs (create for reference)
+    	##With header/IDs created to use as reference 
           pheno <- read.table ("/home/rachel/LCL_chemotherapy/master_cyctotoxicity_info_130311_plus_igrowth.txt", header = T)
           View(pheno)
           CEU <- subset(pheno, pop == "CEU")
           View(CEU)
-          --> pheno_CEU_araclog2IC50 <- CEU[, 1:13]
-          --> View(pheno_CEU_araclog2IC50)
-          --> write.table(pheno_CEU_araclog2IC50, file = "pheno_CEU_araclog2IC50.txt", sep = "\t")
-        ##Without header/IDs (create for use)
-          --> pheno_CEU_araclog2IC50_noids <- pheno_CEU_araclog2IC50[, 5:13]
-          --> View(pheno_CEU_araclog2IC50_noids)
-          --> write.table(pheno_CEU_araclog2IC50_noids, file = "pheno_CEU_araclog2IC50_noids.txt", sep = "\t", row.names = F, col.names = F)
+          pheno_CEU_ARCAlog2IC50 <- CEU[, 1:13]
+          View(pheno_CEU_ARCAlog2IC50)
+          write.table(pheno_CEU_ARCAlog2IC50, file = "pheno_CEU_ARCAlog2IC50.txt", sep = "\t")
 	  
-#Run Gemma
-    gemma -g CEU.TGP_and_imputed.rmBAD.20130526.snp.info.gz -p pheno_CEU_araclog2IC50_noids.txt -gk 1 -o CEU_relationship_matrix
+        ##Without header/IDs created for acutal use 
+         pheno_CEU_ARCAlog2IC50_noIDs <- pheno_CEU_ARCAlog2IC50[, 5:13]
+         View(pheno_CEU_ARCAlog2IC50_noIDs)
+         write.table(pheno_CEU_ARCAlog2IC50_noIDs, file = "pheno_CEU_ARCAlog2IC50_noIDs.txt", sep = "\t", row.names = F, col.names = F)
+	 	  
+#Run Gemma to calculate estimated realtedness matrix 
+   ----> gemma -g CEU.TGP_and_imputed.rmBAD.20130526.snp.info.gz -p pheno_CEU_ARCAlog2IC50_noIDs.txt -gk 1 -o CEU_relationship_matrix
         
-    ## Next must order phenotype file to match order of genotype file
+    ## Need to order pheotype files to match the order of genotype files 
     fam <- read.table("/home/rachel/LCL_chemotherapy/CEU.chr10.TGP_and_imputed.20130416.exclude_BAD_SNPs.fam")
     colnames(fam) <- c("FID", "IID", "FatID", "MatID", "Sex", "Pheno")
     pheno <- read.table("/home/rachel/LCL_chemotherapy/pheno_CEU_araclog2IC50.txt")
