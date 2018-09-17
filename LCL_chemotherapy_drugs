@@ -56,7 +56,7 @@ cp /home/rachel/pheno_CEU_ARAClog2IC50_noIDs.txt /home/rachel/LCL_chemotherapy
 gemma -g CEU.TGP_and_imputed.rmBAD.20130526.snp.info.gz -p pheno_CEU_ARAClog2IC50_noIDs.txt -gk 1 -o CEU_relationship_matrix
 #error to open phenotype file 
 
-## Need to order phenotype file to match genotype file in R 
+---> ## Need to order phenotype file to match genotype file in R 
         fam <- read.table("/home/rachel/LCL_chemotherapy/CEU.chr10.TGP_and_imputed.20130416.exclude_BAD_SNPs.fam")
         colnames(fam) <- c("FID", "IID", "FatID", "MatID", "Sex", "Pheno")
         pheno <- read.table("/home/home/rachel/LCL_chemotherapy/pheno_CEU_ARAClog2IC50.txt")
