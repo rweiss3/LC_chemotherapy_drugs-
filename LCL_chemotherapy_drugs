@@ -77,9 +77,12 @@ gemma -g CEU.TGP_and_imputed.rmBAD.20130526.snp.info.gz -p pheno_CEU_ARAClog2IC5
 		#can delete this vector by Fam_FID <- NULL
 	Fam_FID <- as.numeric(as.character(Fam_FID))
 	pheno_ARAC_ordered <- left_join (Fam_FID, pheno, by = c("FID", "IID"))
-		#error no applicable method for 'left_join' applie to an object of class "c("FID", "IID")
+		#error no applicable method for 'left_join' applied to an object of class "c('double', 'numeric')"
 	Pheno_FID <- factor(c( 1341, 1341, 1341, 1340, 1340, 1340, 1340, 1341, 1341, 1341, 1341, 1340, 1345, 1345, 1345, 1408, 1408, 1416, 1420, 1420, 1334, 1334, 1334, 1344, 1349, 1350, 1350, 1346, 1347, 1362, 1362, 1375, 1350, 1350, 1350, 1350, 1349, 1349, 1347, 1347, 1362, 1362, 1362, 1362, 1420, 1420, 1420, 1420, 1346, 1346, 1344, 1344, 1334, 1334, 1408, 1408, 1375, 1408, 1334, 1416, 1416, 1375, 1358, 1358, 1358, 1444, 1444, 1444, 1447, 1447, 1447, 1447, 1447, 1447, 1454, 1454, 1454, 1454, 1454, 1454, 1459, 1459, 1459, 1459, 1459, 1459, 1463, 1463, 1463, 1328, 13291, 1328, 13291, 13291, 13292, 13292, 13291, 13291, 13292, 1345, 1345, 1345, 13291, 1418, 1418, 1421, 1423, 1423, 1424, 1344, 1346, 1349, 1377, 1377, 1349, 1377, 1377, 1377, 1377, 1423, 1423, 1423, 1423, 1424, 1424, 1336, 1344, 1418, 1418, 1418, 1418, 1421, 1421, 1421, 1421, 1328, 1330, 1330, 1330, 1330, 1330, 1330, 13281, 13281, 13281, 1353, 1353, 1353, 1354, 1354, 1354, 1355, 1355, 1355, 1353, 1353, 1358, 1358, 1444, 1444, 1444, 1451, 1451, 1451, 1451, 1451, 1451, 1456, 1456, 1456, 1456, 1456, 1456, 1458, 1458, 1463, 1463, 1463))
-	
+		#can delete this vecotor by Pheno_FID <- NULL 
+	Pheno_FID <- as.numeric(as.character(Pheno_FID))
+	pheno_ARAC_ordered <- left_join (Fam_FID, pheno, by = c("FID", "IID"))
+		#error no applicable method for 'left_join' applied to an object of class "c('double', 'numeric')"
 		
 
 	
