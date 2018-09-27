@@ -57,7 +57,7 @@ gemma -g CEU.TGP_and_imputed.rmBAD.20130526.snp.info.gz -p pheno_CEU_ARAClog2IC5
 #error to open phenotype file 
 
 ## Need to order phenotype file to match genotype file in R 
-        fam <- read.table("/home/rachel/LCL_chemotherapy/CEU.chr10.TGP_and_imputed.20130416.exclude_BAD_SNPs.fam")
+        Fam <- read.table("/home/rachel/LCL_chemotherapy/CEU.chr10.TGP_and_imputed.20130416.exclude_BAD_SNPs.fam")
         colnames(fam) <- c("FID", "IID", "FatID", "MatID", "Sex", "Pheno")
         pheno <- read.table("/home/rachel/LCL_chemotherapy/pheno_CEU_ARCAlog2I50.txt")
 	
@@ -67,9 +67,13 @@ gemma -g CEU.TGP_and_imputed.rmBAD.20130526.snp.info.gz -p pheno_CEU_ARAClog2IC5
 	#pheno has 180 enteries while fam has 178 enteries 
 
         pheno_ARAC_ordered <- left_join(fam, pheno, by = c("FID", "IID"))
-	--->	#error: error in left_join_impl(x,y, by$x, by$y, suffix$x, suffix$y, check_na_matches(na_matches)): Cna't join on 'FID' X 'FID' becuase of incompatiable types (integer/factor)
+		#error: error in left_join_impl(x,y, by$x, by$y, suffix$x, suffix$y, check_na_matches(na_matches)): Cna't join on 'FID' X 'FID' becuase of incompatiable types (integer/factor)
 	#use as.character(x) to convert to characters 
+	fam = as.character(fam)
 	pheno_ARAC_ordered <- left_join (fam, pheno, by = c("FID", "IID"))
+		#error: no applicable method for 'left_join' applied to an object of calss "character" 
+		
+
 	
         write.table(pheno_ARAC_ordered, "/home/rachel/LCL_chemotherapy/ordered_pheno_CEU_ARAClog2IC50.txt", col.names = T, row.names = T, sep = "/t")
     # Need to create a file with no IDs or col names to use gemma 
