@@ -72,6 +72,11 @@ CEU_ordered <- left_join(Fam, CEU by = c("V1" = "FID", "V2" = "IID"))
         CEU_ordered_noIDs <- CEU_ordered[, 10:17]
         write.table(CEU_ordered_noIDs, "/home/rachel/LCL_chemotherapy/pheno_CEU_ARAClog2IC50_noIDs.txt", col.names = F, row.names = F, sep = "/t")
 	
-#Run gemma 
-    gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno.gz  -p pheno_CEU_ARAClog2IC50_noIDs.txt -gk 1 -o CEU_relationship_matrix
+#Run gemma in terminal 
+cd LCL_chemotherapy
+--> gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno.gz  -p pheno_CEU_ARAClog2IC50_noIDs.txt -gk 1 -o CEU_relationship_matrix
+
+#Run gemma with maf run gemma with maf
+ gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno.gz -p pheno_CEU_ARAClog2IC50_noIDs.txt -gk 1 -maf 0.05 -o CEU_relationship_matrix_maf
+    
     
