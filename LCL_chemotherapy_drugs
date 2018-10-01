@@ -74,9 +74,34 @@ CEU_ordered <- left_join(Fam, CEU by = c("V1" = "FID", "V2" = "IID"))
 	
 #Run gemma in terminal 
 cd LCL_chemotherapy
---> gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno.gz  -p pheno_CEU_ARAClog2IC50_noIDs.txt -gk 1 -o CEU_relationship_matrix
+gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno.gz  -p pheno_CEU_ARAClog2IC50_noIDs.txt -gk 1 -o CEU_relationship_matrix
+## number of total individuals = 178
+## number of analyzed individuals = 178
+## number of covariates = 1
+## number of phenotypes = 1
+## number of total SNPs = 6577474
+## number of analyzed SNPs = 6335054
+##Calculating Relatedness Matrix ... 
+##Reading SNPs  ==================================================100.00%
+
+cd output
+ls
+	#created CEU_relationship_matrix.cXX.txt and CEU_relationship_matrix.log.txt
 
 #Run gemma with maf run gemma with maf
  gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno.gz -p pheno_CEU_ARAClog2IC50_noIDs.txt -gk 1 -maf 0.05 -o CEU_relationship_matrix_maf
-    
+## number of total individuals = 178
+## number of analyzed individuals = 178
+## number of covariates = 1
+## number of phenotypes = 1
+## number of total SNPs = 6577474
+## number of analyzed SNPs = 5219481
+##Calculating Relatedness Matrix ... 
+##Reading SNPs  ==================================================100.00%
+
+cd output
+ls
+	#created CEU_relationship_matrix_maf.cXX.txt and CEU_relationship_matrix_maf.log.txt
+
+--> #Make drug based phenotype files in R 
     
