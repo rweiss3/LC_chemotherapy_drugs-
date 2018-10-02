@@ -107,6 +107,6 @@ ls
  master_phenos <- read.table ("/home/rachel/LCL_chemotherapy/master_cyctotoxicity_info_130311_plus_igrowth.txt", header = T)
     CEU_master_phenos <- subset(master_phenos, pop == "CEU")
     CEU_master_phenos_ordered <- left_join(Fam, CEU_master_pheno, by = c("FID" = "FID", "IID" = "IID", "FatID" = "father", "MatID" = "mother", "Sex" = "sex"))
-    CEU_cisplatin_pheno <- select(CEU_master_phenos_ordeed, 1:13, - pheno, contains("CIS")
+    CEU_cisplatin_pheno <- select(CEU_master_phenos_ordeed, 1:13, - pheno, contains("CIS"))
     	#error phenomust resolve to intefer colum positions, not a list 
     
