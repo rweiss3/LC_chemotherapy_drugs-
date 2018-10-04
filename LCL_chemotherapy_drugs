@@ -103,12 +103,12 @@ cd output
 ls
 	#created CEU_relationship_matrix_maf.cXX.txt and CEU_relationship_matrix_maf.log.txt
 
---> #Make drug based phenotype files in R 
+#Make drug based phenotype files in R 
  master_phenos <- read.table ("/home/rachel/LCL_chemotherapy/master_cyctotoxicity_info_130311_plus_igrowth.txt", header = T)
     CEU_master_phenos <- subset(master_phenos, pop == "CEU")
     CEU_master_phenos_ordered <- left_join(Fam, CEU_master_pheno, by = c("FID" = "FID", "IID" = "IID", "FatID" = "father", "MatID" = "mother", "Sex" = "sex"))
-    CEU_ARAC_pheno <- select(CEU_master_phenos_ordered, 1:13, -CEU, contains("ARAC"))
-    	#error CEU must resolve to integer column positions, not a list 
+----->    CEU_ARAC_pheno <- select(CEU_master_phenos_ordered, 1:13, -CEU, contains("ARAC"))
+    	#error -CEU must resolve to integer column positions, not a list 
 	In addition: Warning messages:
 	1: In Ops.factor(left) : ‘-’ not meaningful for factors
 	2: In Ops.factor(left) : ‘-’ not meaningful for factors
