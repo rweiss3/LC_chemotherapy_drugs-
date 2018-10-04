@@ -1,4 +1,6 @@
 #LC Chemotherapy Drugs 
+	#FID
+	#IID- Independent and identically distributed random variables
 #Data availble in /home/wheelerlab3/Data/LCL_chemotherapy/
   cd /home/wheelerlab3/Data/LCL_chemotherapy/
   less LCL_drug_assay_info.txt
@@ -119,4 +121,6 @@ ls
 	7: In Ops.factor(left) : ‘-’ not meaningful for factors
 	8: In Ops.factor(left) : ‘-’ not meaningful for factors
 	9: In Ops.factor(left) : ‘-’ not meaningful for factors
+CEU_ARAC_pheno <- select(CEU_master_phenos_ordered, 1:13, -V1, contains("ARAC"))
+
     
