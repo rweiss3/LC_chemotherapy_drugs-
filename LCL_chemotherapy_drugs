@@ -121,6 +121,6 @@ ls
 	7: In Ops.factor(left) : ‘-’ not meaningful for factors
 	8: In Ops.factor(left) : ‘-’ not meaningful for factors
 	9: In Ops.factor(left) : ‘-’ not meaningful for factors
-CEU_ARAC_pheno <- select(CEU_master_phenos_ordered, 1:13, -V1, contains("ARAC"))
+CEU_ARAC_pheno <- select(CEU_master_phenos_ordered, 1:13, -pop, contains("ARAC"))
 
     
