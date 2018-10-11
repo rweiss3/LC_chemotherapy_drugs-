@@ -109,19 +109,12 @@ ls
  master_phenos <- read.table ("/home/rachel/LCL_chemotherapy/master_cyctotoxicity_info_130311_plus_igrowth.txt", header = T)
     CEU_master_phenos <- subset(master_phenos, pop == "CEU")
     CEU_master_phenos_ordered <- left_join(Fam, CEU_master_pheno, by = c("FID" = "FID", "IID" = "IID", "FatID" = "father", "MatID" = "mother", "Sex" = "sex"))
------>    CEU_ARAC_pheno <- select(CEU_master_phenos_ordered, 1:13, -CEU, contains("ARAC"))
-______>		---PHENO is removing the -9 column need to check to check which one to remove 
-    	#error -CEU must resolve to integer column positions, not a list 
-	In addition: Warning messages:
-	1: In Ops.factor(left) : ‘-’ not meaningful for factors
-	2: In Ops.factor(left) : ‘-’ not meaningful for factors
-	3: In Ops.factor(left) : ‘-’ not meaningful for factors
-	4: In Ops.factor(left) : ‘-’ not meaningful for factors
-	5: In Ops.factor(left) : ‘-’ not meaningful for factors
-	6: In Ops.factor(left) : ‘-’ not meaningful for factors
-	7: In Ops.factor(left) : ‘-’ not meaningful for factors
-	8: In Ops.factor(left) : ‘-’ not meaningful for factors
-	9: In Ops.factor(left) : ‘-’ not meaningful for factors
+    CEU_ARAC_pheno <- select(CEU_master_phenos_ordered, 1:13, contains("ARAC"))
 
-
-    
+#Run univariate mixed linear GWAS in gemma using GRM
+	#For ARCA use pheno AUC, use rank normalized (Rn) (ARAC_RnAUC)
+  YRI_cisplatin_bestpheno <- select(YRI_cisplatin_pheno, 1:12, contains("ARCA_RnAUC"))
+    write.table(CEU_ARAC_bestpheno, "/home/rachel/LCL_chemotherapy/CEU_ARAC_bestpheno.txt", col.names = T, row.names = F, sep = "/t")
+   # Create a file with phenotype only to use in gemma 
+    CEU_ARCA_bestpheno_noIDs <- select(CEU_ARCA_bestpheno, contains("ARCA"))
+    write.table(CEU_ARAC_bestpheno, "/home/rachel/LCL_chemotherapy/CEU_ARCA_bestpheno_noIDs.txt", col.names = F, row.names = F, sep = "/t")
