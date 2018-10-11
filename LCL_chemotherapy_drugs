@@ -132,4 +132,4 @@ ls
 	
     #run again
     gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno.gz -p CEU_ARCA_bestpheno_noIDs.txt -a CEU.TGP_and_imputed.rmBAD.20130526.snp.info.gz -k CEU_relationship_matrix_maf.cXX.txt -lmm 4 -o CEU_GWAS_ARAC
-	# error fail to open mean genotype file: CEU.TGP_and_imputed.rmBAD.20130526.geno.gz 
+    ----> # error fail to open mean genotype file: CEU.TGP_and_imputed.rmBAD.20130526.geno.gz 
