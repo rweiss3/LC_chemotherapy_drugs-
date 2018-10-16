@@ -129,9 +129,9 @@ ls
     #error: segmentation fault 
     # Unzip SNP file with gunzip filename.snp.info.gz
     	gunzip CEU.TGP_and_imputed.rmBAD.20130526.geno.gz
+	gunzip CEU.TGP_and_imputed.rmBAD.20130526.snp.info.gz 
 	
     #run again
     gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno -p CEU_ARCA_bestpheno_noIDs.txt -a CEU.TGP_and_imputed.rmBAD.20130526.snp.info -k CEU_relationship_matrix_maf.cXX.txt -lmm 4 -o CEU_GWAS_ARAC
-    gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno -p CEU_ARCA_bestpheno_noids.txt -a CEU.TGP_and_imputed.rmBAD.20130526.snp.info -k CEU_relationship_matrix_maf.cXX.txt -lmm 4 -o CEU_GWAS_ARAC
-   ----> # error fail to open mean genotype file: CEU.TGP_and_imputed.rmBAD.20130526.geno.gz 
+   
     
