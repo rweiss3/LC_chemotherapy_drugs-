@@ -219,3 +219,19 @@ ls
  #In Gemma (terminal)
   cd LCL_chemotherapy 
     gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno -p CEU_CIS_bestpheno_noIDs.txt -a CEU.TGP_and_imputed.rmBAD.20130526.snp.info -k CEU_relationship_matrix_maf.cXX.txt -lmm 4 -o CEU_GWAS_CIS
+Reading Files ... 
+## number of total individuals = 178
+## number of analyzed individuals = 178
+## number of covariates = 1
+## number of phenotypes = 1
+## number of total SNPs = 6577474
+## number of analyzed SNPs = 6335054
+Start Eigen-Decomposition...
+pve estimate =3.271e-06
+se(pve) =-nan
+Reading SNPs  ==================================================100.00%
+
+########################### 2 ###################################################
+#Repeat Process for Carboplatin# 
+#DRUG 2 CARBO
+#Create Phenotype File In R	
