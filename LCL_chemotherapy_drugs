@@ -34,7 +34,7 @@ cp /home/wheelerlab3/Data/LCL_chemotherapy/master_cytotoxicity_info_130311_plus_
 	gemma -g gentoype.gz -p phenotype.txt -gk 1 -o output_name 
 	#genotype file (need bimbam format): CEU.TGP_and_imputed.rmBAD.20130526.snp.info.gz 
 	#phenotype file: using master toxicity file 
-	
+#DRUG 4 ARAC	
 #Create Phenotype File In R	
 	#To Make Phenotype File in R, using CEU with only one phenotype 
     	#no header, no IDs for .txt for gemma
@@ -145,8 +145,10 @@ ls
 	##pve estimate =3.271e-06
 	##se(pve) =-nan
 	##Reading SNPs  ==================================================100.00%
-	
+
+################################## 1 ###############################################
 #Repeat Process for Cisplatin# 
+#DRUG 1 CIS
 #Create Phenotype File In R	
 	#To Make Phenotype File in R, using CEU with only one phenotype 
     	#no header, no IDs for .txt for gemma
@@ -184,5 +186,9 @@ gemma -g CEU.TGP_and_imputed.rmBAD.20130526.snp.info.gz -p pheno_CEU_CISlog2IC50
   #Need to craete a file with no IDS or col names to use with gemma 
         CEU__CIS_ordered_noIDs <- select(CEU_ordered, 10:16,23, contains("CIS_log2IC50"))
         write.table(CEU_CIS_ordered_noIDs, "/home/rachel/LCL_chemotherapy/pheno_CEU_CISlog2IC50_noIDs.txt", col.names = F, row.names = F, sep = "/t")
+	
+#Run gemma in terminal 
+cd LCL_chemotherapy
+gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno  -p pheno_CEU_CISlog2IC50_noIDs.txt -gk 1 -o CEU_relationship_matrix
 
     
