@@ -190,5 +190,14 @@ gemma -g CEU.TGP_and_imputed.rmBAD.20130526.snp.info.gz -p pheno_CEU_CISlog2IC50
 #Run gemma in terminal 
 cd LCL_chemotherapy
 gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno  -p pheno_CEU_CISlog2IC50_noIDs.txt -gk 1 -o CEU_relationship_matrix
+Reading Files ... 
+## number of total individuals = 178
+## number of analyzed individuals = 178
+## number of covariates = 1
+## number of phenotypes = 1
+## number of total SNPs = 6577474
+## number of analyzed SNPs = 6335054
+Calculating Relatedness Matrix ... 
+Reading SNPs  ==================================================100.00%
 
     
