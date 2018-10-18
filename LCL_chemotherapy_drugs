@@ -145,5 +145,44 @@ ls
 	##pve estimate =3.271e-06
 	##se(pve) =-nan
 	##Reading SNPs  ==================================================100.00%
+	
+#Repeat Process for Cisplatin# 
+#Create Phenotype File In R	
+	#To Make Phenotype File in R, using CEU with only one phenotype 
+    	#no header, no IDs for .txt for gemma
+    	##With header/IDs created to use as reference 
+          pheno <- read.table ("/home/rachel/LCL_chemotherapy/master_cyctotoxicity_info_130311_plus_igrowth.txt", header = T)
+          View(pheno)
+          CEU <- subset(pheno, pop == "CEU")
+          View(CEU)
+          pheno_CEU_CISlog2IC50 <- select(CEU, 1:12,19, contains("CIS_log2IC50"))
+          View(pheno_CEU_CISlog2IC50)
+          write.table(pheno_CEU_CISlog2IC50, file = "pheno_CEU_CISlog2IC50.txt", sep = "\t")
+	  
+        ##Without header/IDs created for acutal use 
+         pheno_CEU_CISlog2IC50_noIDs <- pheno_CEU_CISlog2IC50[, 5:13]
+         View(pheno_CEU_CISlog2IC50_noIDs)
+         write.table(pheno_CEU_CISlog2IC50_noIDs, file = "pheno_CEU_CISlog2IC50_noIDs.txt", sep = "\t", row.names = F, col.names = F)
+	 
+#Run Gemma to calculate estimated realtedness matrix 
+ cp /home/rachel/pheno_CEU_CISlog2IC50_noIDs.txt /home/rachel/LCL_chemotherapy 
+ cp /home/rachel/pheno_CEU_CISlog2IC50.txt /home/rachel/LCL_chemotherapy 
+ gemma -g CEU.TGP_and_imputed.rmBAD.20130526.snp.info.gz -p pheno_CEU_CISlog2IC50_noIDs.txt -gk 1 -o CEU_relationship_matrix
+ #segmentation fault 
+
+## Need to order phenotype file to match genotype file in R 
+        Fam_IDs <- read.table("/home/rachel/LCL_chemotherapy/CEU.chr10.TGP_and_imputed.20130416.exclude_BAD_SNPs.fam")
+        colnames(Fam) <- c("FID", "IID", "FatID", "MatID", "Sex", "Pheno")
+        pheno_CIS <- read.table("/home/rachel/LCL_chemotherapy/pheno_CEU_CISlog2I50.txt")
+	
+#Run with gemma again 
+gemma -g CEU.TGP_and_imputed.rmBAD.20130526.snp.info.gz -p pheno_CEU_CISlog2IC50_noIDs.txt -gk 1 -o CEU_relationship_matrix
+	##Segmentation fault 
+	#pheno has 180 enteries while fam has 178 enteries 
+	
+ write.table(CEU_ordered, "/home/rachel/LCL_chemotherapy/pheno_CEU_CISlog2IC50.txt", col.names = T, row.names = T, sep = "/t")
+  #Need to craete a file with no IDS or col names to use with gemma 
+        CEU__CIS_ordered_noIDs <- select(CEU_ordered, 10:16,23, contains("CIS_log2IC50"))
+        write.table(CEU_CIS_ordered_noIDs, "/home/rachel/LCL_chemotherapy/pheno_CEU_CISlog2IC50_noIDs.txt", col.names = F, row.names = F, sep = "/t")
 
     
