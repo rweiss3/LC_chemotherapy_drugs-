@@ -323,6 +323,6 @@ write.table(CEU_ordered, "/home/rachel/LCL_chemotherapy/pheno_CEU_CAPElog2AUC.tx
 	
 #Run gemma in terminal 
 cd LCL_chemotherapy
--------->gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno  -p pheno_CEU_CAPE_log2AUC_noIDs.txt -gk 1 -o CEU_relationship_matrix
+#try to run again -------->gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno  -p pheno_CEU_CAPE_log2AUC_noIDs.txt -gk 1 -o CEU_relationship_matrix
 	#segmentaion fault 
 
