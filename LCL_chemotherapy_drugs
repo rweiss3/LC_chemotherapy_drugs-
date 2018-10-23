@@ -314,7 +314,7 @@ Reading SNPs  ==================================================100.00%
          View(pheno_CEU_CAPElog2AUC_noIDs)
          write.table(pheno_CEU_CAPElog2AUC_noIDs, file = "pheno_CEU_CAPElog2AUC_noIDs.txt", sep = "\t", row.names = F, col.names = F)
 #Run Gemma to calculate estimated realtedness matrix 
- cp /home/rachel/pheno_CEU_CAPE_log2AUC_noIDs.txt /home/rachel/LCL_chemotherapy 
+ cp /home/rachel/pheno_CEU_CAPElog2AUC_noIDs.txt /home/rachel/LCL_chemotherapy 
  cp /home/rachel/pheno_CEU_CAPElog2AUC.txt /home/rachel/LCL_chemotherapy 
  gemma -g CEU.TGP_and_imputed.rmBAD.20130526.snp.info -p pheno_CEU_CAPElog2AUC_noIDs.txt -gk 1 -o CEU_relationship_matrix
  #segmentation fault 
@@ -328,6 +328,38 @@ write.table(CEU_ordered, "/home/rachel/LCL_chemotherapy/pheno_CEU_CAPElog2AUC.tx
 	
 #Run gemma in terminal 
 cd LCL_chemotherapy
-#try to run again -------->gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno  -p pheno_CEU_CAPE_log2AUC_noIDs.txt -gk 1 -o CEU_relationship_matrix
+#try to run again -------->gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno  -p pheno_CEU_CAPElog2AUC_noIDs.txt -gk 1 -o CEU_relationship_matrix
 	#segmentaion fault 
 
+
+###########################################5###############################################
+#Repeat process for Daunorubicin 
+# DRUG 4 DAUNO 
+#Create Phenotype File In R	
+	#To Make Phenotype File in R, using CEU with only one phenotype 
+    	#no header, no IDs for .txt for gemma
+    	##With header/IDs created to use as reference 
+          pheno_CEU_DAUNOlog2IC50 <- select(CEU, 1:12,21, contains("DAUNO_log2IC50"))
+          View(pheno_CEU_DAUNOlog2IC50)
+          write.table(pheno_CEU_DAUNOlog2IC50, file = "pheno_CEU_DAUNOlog2IC50.txt", sep = "/t")
+        ##Without header/IDs created for acutal use 
+         pheno_CEU_DAUNOlog2IC50_noIDs <- pheno_CEU_DAUNOlog2IC50[, 5:13]
+         View(pheno_CEU_DAUNOlog2IC50_noIDs)
+         write.table(pheno_CEU_DAUNOlog2IC50_noIDs, file = "pheno_CEU_DAUNOlog2IC50_noIDs.txt", sep = "\t", row.names = F, col.names = F)
+	 
+#Run Gemma to calculate estimated realtedness matrix 
+ cp /home/rachel/pheno_CEU_DAUNOlog2IC50_noIDs.txt /home/rachel/LCL_chemotherapy 
+ cp /home/rachel/pheno_CEU_DAUNOlog2IC50.txt /home/rachel/LCL_chemotherapy 
+ gemma -g CEU.TGP_and_imputed.rmBAD.20130526.snp.info -p pheno_CEU_DAUNOlog2IC50_noIDs.txt -gk 1 -o CEU_relationship_matrix
+ #segmentation fault 
+ 
+ ## Need to order phenotype file to match genotype file in R 
+        pheno_DAUNO <- read.table("/home/rachel/LCL_chemotherapy/pheno_CEU_DAUNOlog2IC50.txt")
+	
+write.table(CEU_ordered, "/home/rachel/LCL_chemotherapy/pheno_CEU_DAUNOlog2IC50.txt", col.names = T, row.names = T, sep = "/t")
+  #Need to craete a file with no IDS or col names to use with gemma 
+        CEU_DAUNO_ordered_noIDs <- select(CEU_ordered, 10:16,25, contains("DAUNO_log2IC50"))
+        write.table(CEU_DAUNO_ordered_noIDs, "/home/rachel/LCL_chemotherapy/pheno_CEU_DAUNOlog2IC50_noIDs.txt", col.names = F, row.names = F, sep = "/t")
+
+cd LCL_chemotherapy
+gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno  -p pheno_CEU_DAUNOlog2IC50_noIDs.txt -gk 1 -o CEU_relationship_matrix
