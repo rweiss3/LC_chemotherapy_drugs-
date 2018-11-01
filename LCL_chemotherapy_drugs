@@ -1,3 +1,4 @@
+#have p-value for ARCA and CIS 
 #LC Chemotherapy Drugs 
 	#FID
 	#IID- Independent and identically distributed random variables
@@ -300,12 +301,23 @@ pve estimate =3.271e-06
 se(pve) =-nan
 Reading SNPs  ==================================================100.00%
 
-________>CEU_CARBO_bestpheno_2 <- select(CEU_CARBO_pheno, contains("CARBO_RnIC50"))
+CEU_CARBO_bestpheno_2 <- select(CEU_CARBO_pheno, contains("CARBO_RnIC50"))
 write.table(CEU_CARBO_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_CARBO_bestpheno_2.txt", col.names = T, row.names = F, sep = "/t")
 CEU_CARBO_bestpheno_2_noIDs <- select(CEU_CARBO_bestpheno_2, contains ("CARBO"))
 write.table(CEU_CARBO_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_CARBO_bestpheno_2_noIDs.txt", col.names = F, row.names = F, sep = "/t")
 gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno -p CEU_CARBO_bestpheno_2_noIDs.txt -a CEU.TGP_and_imputed.rmBAD.20130526.snp.info -k CEU_relationship_matrix_maf.cXX.txt -lmm 4 -o CEU_GWAS_CARBO
-
+Reading Files ... 
+## number of total individuals = 178
+## number of analyzed individuals = 166
+## number of covariates = 1
+## number of phenotypes = 1
+## number of total SNPs = 6577474
+## number of analyzed SNPs = 6312355
+Start Eigen-Decomposition...
+pve estimate =0.101753
+se(pve) =0.189405
+Reading SNPs  ==================================================100.00%
+	#Got a p-value
 ########################################################### 3 #######################################################
 #Repeat Process for Capecitabine# 
 #DRUG 2 CAPE
@@ -408,4 +420,37 @@ write.table(CEU_DAUNO_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_DAUNO_best
 	 
 ## Need to order phenotype file to match genotype file in R 
         pheno_PEME <- read.table("/home/rachel/LCL_chemotherapy/pheno_CEU_PEME_log2AUC_noIDs.txt")
-	
+
+
+
+
+
+
+#Create Phenotype File In R	
+#To Make Phenotype File in R, using CEU with only one phenotype 
+    	#no header, no IDs for .txt for gemma
+    	##With header/IDs created to use as reference
+          pheno_CEU_PEME_log2AUC <- select(CEU, 1:12,27, contains("PEME_log2AUC"))
+          View(pheno_CEU_PEME_log2AUC)
+          write.table(pheno_CEU_PEME_log2AUC, file = "pheno_CEU_PEME_log2AUC.txt", sep = "\t")
+	  
+        ##Without header/IDs created for acutal use 
+         pheno_CEU_PEME_log2AUC_noIDs <- pheno_CEU_PEME_log2AUC[, 5:13]
+         View(pheno_CEU_PEME_log2AUC_noIDs)
+         write.table(pheno_CEU_PEME_log2AUC_noIDs, file = "pheno_CEU_PEME_log2AUC_noIDs.txt", sep = "\t", row.names = F, col.names = F)
+ #In terminal 
+ cp /home/rachel/pheno_CEU_PEME_log2AUC_noIDs.txt /home/rachel/LCL_chemotherapy 
+ cp /home/rachel/pheno_CEU_PEME_log2AUC.txt /home/rachel/LCL_chemotherapy 
+## Need to order phenotype file to match genotype file in R 
+        pheno_PEME <- read.table("/home/rachel/LCL_chemotherapy/pheno_CEU_PEME_log2AUC_noIDs.txt")
+
+write.table(CEU_ordered, "/home/rachel/LCL_chemotherapy/pheno_CEU_PEME_log2AUC.txt", col.names = T, row.names = T, sep = "/t")
+  #Need to craete a file with no IDS or col names to use with gemma 
+        CEU_PEME_ordered_noIDs <- select(CEU_ordered, 10:16,31, contains("PEME_log2AUC"))
+        write.table(CEU_PEME_ordered_noIDs, "/home/rachel/LCL_chemotherapy/pheno_CEU_PEME_log2AUC_noIDs.txt", col.names = F, row.names = F, sep = "/t")
+
+CEU_PEME_bestpheno_2 <- select(CEU_CARBO_pheno, contains("CARBO_RnIC50"))
+write.table(CEU_CARBO_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_CARBO_bestpheno_2.txt", col.names = T, row.names = F, sep = "/t")
+CEU_CARBO_bestpheno_2_noIDs <- select(CEU_CARBO_bestpheno_2, contains ("CARBO"))
+write.table(CEU_CARBO_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_CARBO_bestpheno_2_noIDs.txt", col.names = F, row.names = F, sep = "/t")
+gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno -p CEU_CARBO_bestpheno_2_noIDs.txt -a CEU.TGP_and_imputed.rmBAD.20130526.snp.info -k CEU_relationship_matrix_maf.cXX.txt -lmm 4 -o CEU_GWAS_CARBO
