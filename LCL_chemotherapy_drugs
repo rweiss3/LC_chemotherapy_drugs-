@@ -449,7 +449,19 @@ write.table(CEU_ordered, "/home/rachel/LCL_chemotherapy/pheno_CEU_PEME_log2AUC.t
         CEU_PEME_ordered_noIDs <- select(CEU_ordered, 10:16,31, contains("PEME_log2AUC"))
         write.table(CEU_PEME_ordered_noIDs, "/home/rachel/LCL_chemotherapy/pheno_CEU_PEME_log2AUC_noIDs.txt", col.names = F, row.names = F, sep = "/t")
 
-CEU_PEME_bestpheno_2 <- select(CEU_CARBO_pheno, contains("CARBO_RnIC50"))
+#Run gemma in terminal 
+cd LCL_chemotherapy
+gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno  -p pheno_CEU_PEME_log2AUC_noIDs.txt -gk 1 -o CEU_relationship_matrix
+
+
+#Make drug based phenotype files in R 
+    CEU_PEME_pheno <- select(CEU_master_phenos_ordered, 1:12,18, contains("PEME"))
+
+#Run univariate mixed linear GWAS in gemma using GRM
+	#For PEME use pheno log2AUC, use rank normalized (Rn) (PEME_log2AUC)
+#In R	
+
+CEU_PEME_bestpheno_2 <- select(CEU_PEME_pheno, contains("PEME_log2AUC"))
 write.table(CEU_CARBO_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_CARBO_bestpheno_2.txt", col.names = T, row.names = F, sep = "/t")
 CEU_CARBO_bestpheno_2_noIDs <- select(CEU_CARBO_bestpheno_2, contains ("CARBO"))
 write.table(CEU_CARBO_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_CARBO_bestpheno_2_noIDs.txt", col.names = F, row.names = F, sep = "/t")
