@@ -248,6 +248,7 @@ pve estimate =3.271e-06
 se(pve) =-nan
 Reading SNPs  ==================================================100.00%
 
+CEU_CIS_bestpheno_2 <- select(CEU_CIS_pheno, contains("CIS_log2IC50"))
 write.table(CEU_CIS_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_CIS_bestpheno_2.txt", col.names = T, row.names = F, sep = "/t")
 CEU_CIS_bestpheno_2_noIDs <- select(CEU_CIS_bestpheno_2, contains ("CIS")
 write.table(CEU_CIS_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_CIS_bestpheno_2_noIDs.txt", col.names = F, row.names = F, sep = "/t")
@@ -319,6 +320,12 @@ Start Eigen-Decomposition...
 pve estimate =3.271e-06
 se(pve) =-nan
 Reading SNPs  ==================================================100.00%
+
+________>CEU_CARBO_bestpheno_2 <- select(CEU_CIS_pheno, contains("CARBO_log2IC50"))
+write.table(CEU_CARBO_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_CARBO_bestpheno_2.txt", col.names = T, row.names = F, sep = "/t")
+CEU_CARBO_bestpheno_2_noIDs <- select(CEU_CARBO_bestpheno_2, contains ("CARBO")
+write.table(CEU_CARBO_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_CARBO_bestpheno_2_noIDs.txt", col.names = F, row.names = F, sep = "/t")
+gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno -p CEU_CARBO_bestpheno_2_noIDs.txt -a CEU.TGP_and_imputed.rmBAD.20130526.snp.info -k CEU_relationship_matrix_maf.cXX.txt -lmm 4 -o CEU_GWAS_CARBO
 
 ########################################################### 3 #######################################################
 #Repeat Process for Capecitabine# 
@@ -397,4 +404,13 @@ Reading SNPs  ==================================================100.00%
 
 ------> #Make drug based phenotype files in R 
     CEU_DAUNO_pheno <- select(CEU_master_phenos_ordered, 1:12,22, contains("DAUNO"))
+#Run univariate mixed linear GWAS in gemma using GRM
+	#For DAUNO use pheno IC50, use rank normalized (Rn) (DAUNO_log2IC50)
+	
+ CEU_DAUNO_bestpheno_2 <- select(CEU_DAUNO_pheno, contains("DAUNO_log2IC50"))
+write.table(CEU_DAUNO_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_DAUNO_bestpheno_2.txt", col.names = T, row.names = F, sep = "/t")
+CEU_DAUNO_bestpheno_2_noIDs <- select(CEU_DAUNO_bestpheno_2, contains ("DAUNO")
+write.table(CEU_DAUNO_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_DAUNO_bestpheno_2_noIDs.txt", col.names = F, row.names = F, sep = "/t")
+gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno -p CEU_DAUNO_bestpheno_2_noIDs.txt -a CEU.TGP_and_imputed.rmBAD.20130526.snp.info -k CEU_relationship_matrix_maf.cXX.txt -lmm 4 -o CEU_GWAS_DAUNO
+
 
