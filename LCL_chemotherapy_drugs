@@ -227,27 +227,6 @@ ls
 #Run univariate mixed linear GWAS in gemma using GRM
 	#For CIS use pheno IC50, use rank normalized (Rn) (CIS_RnIC50)
 #In R	
-  CEU_CIS_bestpheno <- select(CEU_CIS_pheno, 1:12, contains("CIS_RnIC50"))
-    write.table(CEU_CIS_bestpheno, "/home/rachel/LCL_chemotherapy/CEU_CIS_bestpheno.txt", col.names = T, row.names = F, sep = "/t")
-  #Create phenotype file only to run with gemma
-    CEU_CIS_bestpheno_noIDs <- select(CEU_CIS_bestpheno, contains("CIS"))
-    write.table(CEU_CIS_bestpheno, "/home/rachel/LCL_chemotherapy/CEU_CIS_bestpheno_noIDs.txt", col.names = F, row.names = F, sep = "/t")
-  
- #In Gemma (terminal)
-  cd LCL_chemotherapy 
-    gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno -p CEU_CIS_bestpheno_noIDs.txt -a CEU.TGP_and_imputed.rmBAD.20130526.snp.info -k CEU_relationship_matrix_maf.cXX.txt -lmm 4 -o CEU_GWAS_CIS
-Reading Files ... 
-## number of total individuals = 178
-## number of analyzed individuals = 178
-## number of covariates = 1
-## number of phenotypes = 1
-## number of total SNPs = 6577474
-## number of analyzed SNPs = 6335054
-Start Eigen-Decomposition...
-pve estimate =3.271e-06
-se(pve) =-nan
-Reading SNPs  ==================================================100.00%
-
 CEU_CIS_bestpheno_2 <- select(CEU_CIS_pheno, contains("CIS_log2IC50"))
 write.table(CEU_CIS_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_CIS_bestpheno_2.txt", col.names = T, row.names = F, sep = "/t")
 CEU_CIS_bestpheno_2_noIDs <- select(CEU_CIS_bestpheno_2, contains ("CIS")
@@ -321,7 +300,7 @@ pve estimate =3.271e-06
 se(pve) =-nan
 Reading SNPs  ==================================================100.00%
 
-________>CEU_CARBO_bestpheno_2 <- select(CEU_CARBO_pheno, contains("CARBO_log2IC50"))
+________>CEU_CARBO_bestpheno_2 <- select(CEU_CARBO_pheno, contains("CARBO_RnIC50"))
 write.table(CEU_CARBO_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_CARBO_bestpheno_2.txt", col.names = T, row.names = F, sep = "/t")
 CEU_CARBO_bestpheno_2_noIDs <- select(CEU_CARBO_bestpheno_2, contains ("CARBO"))
 write.table(CEU_CARBO_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_CARBO_bestpheno_2_noIDs.txt", col.names = F, row.names = F, sep = "/t")
@@ -402,15 +381,31 @@ Reading Files ...
 Calculating Relatedness Matrix ... 
 Reading SNPs  ==================================================100.00%
 
-------> #Make drug based phenotype files in R 
+#Make drug based phenotype files in R 
     CEU_DAUNO_pheno <- select(CEU_master_phenos_ordered, 1:12,22, contains("DAUNO"))
 #Run univariate mixed linear GWAS in gemma using GRM
 	#For DAUNO use pheno IC50, use rank normalized (Rn) (DAUNO_log2IC50)
 	
  CEU_DAUNO_bestpheno_2 <- select(CEU_DAUNO_pheno, contains("DAUNO_log2IC50"))
 write.table(CEU_DAUNO_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_DAUNO_bestpheno_2.txt", col.names = T, row.names = F, sep = "/t")
-CEU_DAUNO_bestpheno_2_noIDs <- select(CEU_DAUNO_bestpheno_2, contains ("DAUNO")
+CEU_DAUNO_bestpheno_2_noIDs <- select(CEU_DAUNO_bestpheno_2, contains ("DAUNO"))
 write.table(CEU_DAUNO_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_DAUNO_bestpheno_2_noIDs.txt", col.names = F, row.names = F, sep = "/t")
-gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno -p CEU_DAUNO_bestpheno_2_noIDs.txt -a CEU.TGP_and_imputed.rmBAD.20130526.snp.info -k CEU_relationship_matrix_maf.cXX.txt -lmm 4 -o CEU_GWAS_DAUNO
+-----> gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno -p CEU_DAUNO_bestpheno_2_noIDs.txt -a CEU.TGP_and_imputed.rmBAD.20130526.snp.info -k CEU_relationship_matrix_maf.cXX.txt -lmm 4 -o CEU_GWAS_DAUNO
 
-
+###############################################5#################################################
+#Repeat Process for Pemetrexed# 
+#DRUG 1 PEME
+#Create Phenotype File In R	
+	#To Make Phenotype File in R, using CEU with only one phenotype 
+    	#no header, no IDs for .txt for gemma
+    	##With header/IDs created to use as reference 
+          pheno_CEU_PEME_log2AUC <- select(CEU, 1:12,26, contains("PEME_log2AUC"))
+          write.table(pheno_CEU_PEME_log2AUC, file = "pheno_CEU_PEME_log2AUC.txt", sep = "\t")
+	  
+        ##Without header/IDs created for acutal use 
+         pheno_CEU_PEME_log2AUC_noIDs <- pheno_CEU_PEME_log2AUC[,5:13]
+         write.table(pheno_CEU_PEME_log2AUC_noIDs, file = "pheno_CEU_PEME_log2AUC_noIDs.txt", sep = "\t", row.names = F, col.names = F)
+	 
+## Need to order phenotype file to match genotype file in R 
+        pheno_PEME <- read.table("/home/rachel/LCL_chemotherapy/pheno_CEU_PEME_log2AUC_noIDs.txt")
+	
