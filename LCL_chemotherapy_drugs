@@ -406,26 +406,7 @@ write.table(CEU_DAUNO_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_DAUNO_best
 
 ###############################################5#################################################
 #Repeat Process for Pemetrexed# 
-#DRUG 1 PEME
-#Create Phenotype File In R	
-	#To Make Phenotype File in R, using CEU with only one phenotype 
-    	#no header, no IDs for .txt for gemma
-    	##With header/IDs created to use as reference 
-          pheno_CEU_PEME_log2AUC <- select(CEU, 1:12,26, contains("PEME_log2AUC"))
-          write.table(pheno_CEU_PEME_log2AUC, file = "pheno_CEU_PEME_log2AUC.txt", sep = "\t")
-	  
-        ##Without header/IDs created for acutal use 
-         pheno_CEU_PEME_log2AUC_noIDs <- pheno_CEU_PEME_log2AUC[,5:13]
-         write.table(pheno_CEU_PEME_log2AUC_noIDs, file = "pheno_CEU_PEME_log2AUC_noIDs.txt", sep = "\t", row.names = F, col.names = F)
-	 
-## Need to order phenotype file to match genotype file in R 
-        pheno_PEME <- read.table("/home/rachel/LCL_chemotherapy/pheno_CEU_PEME_log2AUC_noIDs.txt")
-
-
-
-
-
-
+#DRUG 5 PEME
 #Create Phenotype File In R	
 #To Make Phenotype File in R, using CEU with only one phenotype 
     	#no header, no IDs for .txt for gemma
@@ -452,17 +433,75 @@ write.table(CEU_ordered, "/home/rachel/LCL_chemotherapy/pheno_CEU_PEME_log2AUC.t
 #Run gemma in terminal 
 cd LCL_chemotherapy
 gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno  -p pheno_CEU_PEME_log2AUC_noIDs.txt -gk 1 -o CEU_relationship_matrix
-
+Reading Files ... 
+## number of total individuals = 178
+## number of analyzed individuals = 178
+## number of covariates = 1
+## number of phenotypes = 1
+## number of total SNPs = 6577474
+## number of analyzed SNPs = 6335054
+Calculating Relatedness Matrix ... 
+Reading SNPs  ==================================================100.00%
 
 #Make drug based phenotype files in R 
-    CEU_PEME_pheno <- select(CEU_master_phenos_ordered, 1:12,18, contains("PEME"))
+    CEU_PEME_pheno <- select(CEU_master_phenos_ordered, 1:12,28, contains("PEME"))
 
 #Run univariate mixed linear GWAS in gemma using GRM
 	#For PEME use pheno log2AUC, use rank normalized (Rn) (PEME_log2AUC)
 #In R	
-
 CEU_PEME_bestpheno_2 <- select(CEU_PEME_pheno, contains("PEME_log2AUC"))
-write.table(CEU_CARBO_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_CARBO_bestpheno_2.txt", col.names = T, row.names = F, sep = "/t")
-CEU_CARBO_bestpheno_2_noIDs <- select(CEU_CARBO_bestpheno_2, contains ("CARBO"))
-write.table(CEU_CARBO_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_CARBO_bestpheno_2_noIDs.txt", col.names = F, row.names = F, sep = "/t")
-gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno -p CEU_CARBO_bestpheno_2_noIDs.txt -a CEU.TGP_and_imputed.rmBAD.20130526.snp.info -k CEU_relationship_matrix_maf.cXX.txt -lmm 4 -o CEU_GWAS_CARBO
+write.table(CEU_PEME_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_PEME_bestpheno_2.txt", col.names = T, row.names = F, sep = "/t")
+CEU_PEME_bestpheno_2_noIDs <- select(CEU_PEME_bestpheno_2, contains ("PEME"))
+write.table(CEU_PEME_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_PEME_bestpheno_2_noIDs.txt", col.names = F, row.names = F, sep = "/t")
+
+#In terminal 
+gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno -p CEU_PEME_bestpheno_2_noIDs.txt -a CEU.TGP_and_imputed.rmBAD.20130526.snp.info -k CEU_relationship_matrix_maf.cXX.txt -lmm 4 -o CEU_GWAS_PEME
+
+
+
+
+
+###############################################7#################################################
+#Repeat Process for Etoposide# 
+#DRUG 7 ETOP
+#Create Phenotype File In R	
+#To Make Phenotype File in R, using CEU with only one phenotype 
+    	#no header, no IDs for .txt for gemma
+    	##With header/IDs created to use as reference
+          pheno_CEU_ETOP_log2IC50 <- select(CEU, 1:12,38, contains("ETOP_Rn_IC50"))
+          View(pheno_CEU_ETOP_log2IC50)
+          write.table(pheno_CEU_ETOP_log2IC50, file = "pheno_CEU_ETOP_log2IC50.txt", sep = "\t")
+	  
+        ##Without header/IDs created for acutal use 
+         pheno_CEU_ETOP_log2IC50_noIDs <- pheno_CEU_ETOP_log2IC50[, 5:13]
+         View(pheno_CEU_ETOP_log2IC50_noIDs)
+         write.table(pheno_CEU_ETOP_log2IC50_noIDs, file = "pheno_CEU_ETOP_log2IC50_noIDs.txt", sep = "\t", row.names = F, col.names = F)
+ #In terminal 
+ cp /home/rachel/pheno_CEU_ETOP_log2IC50_noIDs.txt /home/rachel/LCL_chemotherapy 
+ cp /home/rachel/pheno_CEU_ETOP_log2IC50.txt /home/rachel/LCL_chemotherapy 
+## Need to order phenotype file to match genotype file in R 
+        pheno_ETOP <- read.table("/home/rachel/LCL_chemotherapy/pheno_CEU_ETOP_log2IC50_noIDs.txt")
+
+write.table(CEU_ordered, "/home/rachel/LCL_chemotherapy/pheno_CEU_ETOP_log2IC50.txt", col.names = T, row.names = T, sep = "/t")
+  #Need to craete a file with no IDS or col names to use with gemma 
+        CEU_ETOP_ordered_noIDs <- select(CEU_ordered, 10:16,42, contains("ETOP_Rn_IC50"))
+        write.table(CEU_ETOP_ordered_noIDs, "/home/rachel/LCL_chemotherapy/pheno_CEU_ETOP_log2IC50_noIDs.txt", col.names = F, row.names = F, sep = "/t")
+
+#Run gemma in terminal 
+cd LCL_chemotherapy
+START HERE -------> gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno  -p pheno_CEU_ETOP_log2IC50_noIDs.txt -gk 1 -o CEU_relationship_matrix
+
+
+#Make drug based phenotype files in R 
+    CEU_PEME_pheno <- select(CEU_master_phenos_ordered, 1:12,28, contains("PEME"))
+
+#Run univariate mixed linear GWAS in gemma using GRM
+	#For PEME use pheno log2AUC, use rank normalized (Rn) (PEME_log2AUC)
+#In R	
+CEU_PEME_bestpheno_2 <- select(CEU_PEME_pheno, contains("PEME_log2AUC"))
+write.table(CEU_PEME_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_PEME_bestpheno_2.txt", col.names = T, row.names = F, sep = "/t")
+CEU_PEME_bestpheno_2_noIDs <- select(CEU_PEME_bestpheno_2, contains ("PEME"))
+write.table(CEU_PEME_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_PEME_bestpheno_2_noIDs.txt", col.names = F, row.names = F, sep = "/t")
+
+#In terminal 
+gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno -p CEU_PEME_bestpheno_2_noIDs.txt -a CEU.TGP_and_imputed.rmBAD.20130526.snp.info -k CEU_relationship_matrix_maf.cXX.txt -lmm 4 -o CEU_GWAS_PEME
