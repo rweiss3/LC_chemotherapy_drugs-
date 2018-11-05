@@ -642,3 +642,14 @@ write.table(CEU_CAPE_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_CAPE_bestph
 
 #In terminal 
 START HERE ----> gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno -p CEU_CAPE_bestpheno_2_noIDs.txt -a CEU.TGP_and_imputed.rmBAD.20130526.snp.info -k CEU_relationship_matrix_maf.cXX.txt -lmm 4 -o CEU_GWAS_CAPE
+
+#Making plots in R
+    #import packages
+    library(data.table)
+    library(dplyr)
+    library(ggplot2)
+    library(qqman)
+ #CIS 
+    #QQ Plot
+    GWAS_CIS <- fread("/home/rachel/LCL_chemotherapy/CEU_GWAS_CIS")
+    
