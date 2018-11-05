@@ -1,4 +1,4 @@
-#have p-value for ARCA, CIS, and CARBO 
+#don't have columns for drugs 8 or 9 in CEU 
 #LC Chemotherapy Drugs 
 	#FID
 	#IID- Independent and identically distributed random variables
@@ -330,39 +330,6 @@ pve estimate =0.212706
 se(pve) =0.200632
 Reading SNPs  ==================================================100.00%
 	#Got a p-value
-########################################################### 3 #######################################################
-#Repeat Process for Capecitabine# 
-#DRUG 2 CAPE
-#Create Phenotype File In R	
-#To Make Phenotype File in R, using CEU with only one phenotype 
-    	#no header, no IDs for .txt for gemma
-    	##With header/IDs created to use as reference
-          pheno_CEU_CAPElog2AUC <- select(CEU, 1:12,16, contains("CAPE_log2AUC"))
-          View(pheno_CEU_CAPElog2AUC)
-          write.table(pheno_CEU_CAPElog2AUC, file = "pheno_CEU_CAPElog2AUC.txt", sep = "\t")
-	  
-        ##Without header/IDs created for acutal use 
-         pheno_CEU_CAPElog2AUC_noIDs <- pheno_CEU_CAPElog2AUC[, 5:13]
-         View(pheno_CEU_CAPElog2AUC_noIDs)
-         write.table(pheno_CEU_CAPElog2AUC_noIDs, file = "pheno_CEU_CAPElog2AUC_noIDs.txt", sep = "\t", row.names = F, col.names = F)
-#Run Gemma to calculate estimated realtedness matrix 
- cp /home/rachel/pheno_CEU_CAPElog2AUC_noIDs.txt /home/rachel/LCL_chemotherapy 
- cp /home/rachel/pheno_CEU_CAPElog2AUC.txt /home/rachel/LCL_chemotherapy 
- gemma -g CEU.TGP_and_imputed.rmBAD.20130526.snp.info -p pheno_CEU_CAPElog2AUC_noIDs.txt -gk 1 -o CEU_relationship_matrix
- #segmentation fault 
-## Need to order phenotype file to match genotype file in R 
-        pheno_CAPE <- read.table("/home/rachel/LCL_chemotherapy/pheno_CEU_CAPElog2AUC.txt")
-	
-write.table(CEU_ordered, "/home/rachel/LCL_chemotherapy/pheno_CEU_CAPElog2AUC.txt", col.names = T, row.names = T, sep = "/t")
-  #Need to craete a file with no IDS or col names to use with gemma 
-        CEU_CAPE_ordered_noIDs <- select(CEU_ordered, 10:16,20, contains("CAPE_log2AUC"))
-        write.table(pheno_CEU_CAPElog2AUC_noIDs, "/home/rachel/LCL_chemotherapy/pheno_CEU_CAPElog2AUC_noIDs.txt", col.names = F, row.names = F, sep = "/t")
-	
-#Run gemma in terminal 
-cd LCL_chemotherapy
-#try to run again -------->gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno  -p pheno_CEU_CAPElog2AUC_noIDs.txt -gk 1 -o CEU_relationship_matrix
-	#segmentaion fault 
-
 
 ###########################################5###############################################
 #Repeat process for Daunorubicin 
@@ -428,6 +395,7 @@ Start Eigen-Decomposition...
 pve estimate =0.679158
 se(pve) =0.200392
 Reading SNPs  ==================================================100.00%
+	#got a p-value
 
 ###############################################5#################################################
 #Repeat Process for Pemetrexed# 
@@ -492,7 +460,8 @@ Start Eigen-Decomposition...
 pve estimate =0.453914
 se(pve) =0.223791
 Reading SNPs  ==================================================100.00%
-
+	#got a p-value
+	
 ###############################################7#################################################
 #Repeat Process for Etoposide# 
 #DRUG 7 ETOP
@@ -557,7 +526,7 @@ Start Eigen-Decomposition...
 pve estimate =0.437099
 se(pve) =0.242251
 Reading SNPs  ==================================================100.00%
-
+	#got a p-value
 ###############################################10#################################################
 #Repeat Process for Paclitaxel# 
 #DRUG 7 PACL
@@ -598,7 +567,7 @@ Calculating Relatedness Matrix ...
 Reading SNPs  ==================================================100.00%
 
 #Make drug based phenotype files in R 
-START HERE ----> CEU_PACL_pheno <- select(CEU_master_phenos_ordered, 1:12,42, contains("PACL"))
+CEU_PACL_pheno <- select(CEU_master_phenos_ordered, 1:12,42, contains("PACL"))
 
 #Run univariate mixed linear GWAS in gemma using GRM
 	#For PACL use pheno log2_AUC, use rank normalized (Rn) (PACL_Rn_AUC)
@@ -610,6 +579,16 @@ write.table(CEU_PACL_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_PACL_bestph
 
 #In terminal 
 gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno -p CEU_PACL_bestpheno_2_noIDs.txt -a CEU.TGP_and_imputed.rmBAD.20130526.snp.info -k CEU_relationship_matrix_maf.cXX.txt -lmm 4 -o CEU_GWAS_PACL
+## number of total individuals = 178
+## number of analyzed individuals = 77
+## number of covariates = 1
+## number of phenotypes = 1
+## number of total SNPs = 6577474
+## number of analyzed SNPs = 6223077
+Start Eigen-Decomposition...
+pve estimate =3.25429e-06
+se(pve) =0.261197
+Reading SNPs  ==================================================100.00%
 
 #############################################3##################################################################################
 #Repeat Process for Capecitabine# 
@@ -663,25 +642,3 @@ write.table(CEU_CAPE_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_CAPE_bestph
 
 #In terminal 
 START HERE ----> gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno -p CEU_CAPE_bestpheno_2_noIDs.txt -a CEU.TGP_and_imputed.rmBAD.20130526.snp.info -k CEU_relationship_matrix_maf.cXX.txt -lmm 4 -o CEU_GWAS_CAPE
-
-
-
-#Making plots in R
-	#Drug 1 Cisplatin
-    	#import packages
-    	library(data.table)
-    	library(dplyr)
-    	library(ggplot2)
-    	library(qqman)
-    #QQ plot 
-    GWAS_CIS <- fread("/home/rachel/LCL_chemotherapy/CEU_GWAS_CIS")
-    png(filename = "YRI_GWAS_carboplatin.qqplot.png", res=100)
-    qq(GWAS_carbo$p_wald)
-    dev.off()
-
-    ##Manhattan Plot
-    png(filename = "YRI_GWAS_carboplatin.manplot.png", res=100)
-    manhattan(GWAS_carbo, chr = "chr", bp = "ps", p = "p_wald")
-    dev.off()
-
-    ##repeat with other drugs
