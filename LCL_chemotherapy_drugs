@@ -546,8 +546,17 @@ write.table(CEU_ETOP_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_ETOP_bestph
 
 #In terminal 
 gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno -p CEU_ETOP_bestpheno_2_noIDs.txt -a CEU.TGP_and_imputed.rmBAD.20130526.snp.info -k CEU_relationship_matrix_maf.cXX.txt -lmm 4 -o CEU_GWAS_ETOP
-
-
+Reading Files ... 
+## number of total individuals = 178
+## number of analyzed individuals = 84
+## number of covariates = 1
+## number of phenotypes = 1
+## number of total SNPs = 6577474
+## number of analyzed SNPs = 6255207
+Start Eigen-Decomposition...
+pve estimate =0.437099
+se(pve) =0.242251
+Reading SNPs  ==================================================100.00%
 
 ###############################################10#################################################
 #Repeat Process for Paclitaxel# 
@@ -600,7 +609,7 @@ CEU_PACL_bestpheno_2_noIDs <- select(CEU_PACL_bestpheno_2, contains ("PACL"))
 write.table(CEU_PACL_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_PACL_bestpheno_2_noIDs.txt", col.names = F, row.names = F, sep = "/t")
 
 #In terminal 
-gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno -p CEU_PACL_bestpheno_2_noIDs.txt -a CEU.TGP_and_imputed.rmBAD.20130526.snp.info -k CEU_relationship_matrix_maf.cXX.txt -lmm 4 -o CEU_GWAS_ETOP
+gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno -p CEU_PACL_bestpheno_2_noIDs.txt -a CEU.TGP_and_imputed.rmBAD.20130526.snp.info -k CEU_relationship_matrix_maf.cXX.txt -lmm 4 -o CEU_GWAS_PACL
 
 #############################################3##################################################################################
 #Repeat Process for Capecitabine# 
@@ -618,39 +627,30 @@ gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno -p CEU_PACL_bestpheno_2_noIDs.t
          View(pheno_CEU_CAPE_log2AUC_noIDs)
          write.table(pheno_CEU_CAPE_log2AUC_noIDs, file = "pheno_CEU_CAPE_log2AUC_noIDs.txt", sep = "\t", row.names = F, col.names = F)
  #In terminal 
-START HERE ----> cp /home/rachel/pheno_CEU_CAPE_log2AUC_noIDs.txt /home/rachel/LCL_chemotherapy 
- cp /home/rachel/pheno_CEU_CAPE_log2AUC.txt /home/rachel/LCL_chemotherapy 
+cp /home/rachel/pheno_CEU_CAPE_log2AUC_noIDs.txt /home/rachel/LCL_chemotherapy 
+cp /home/rachel/pheno_CEU_CAPE_log2AUC.txt /home/rachel/LCL_chemotherapy 
 ## Need to order phenotype file to match genotype file in R 
-        pheno_PACL <- read.table("/home/rachel/LCL_chemotherapy/pheno_CEU_PACL_log2_AUC_noIDs.txt")
+        pheno_CAPE <- read.table("/home/rachel/LCL_chemotherapy/pheno_CEU_CAPE_log2AUC_noIDs.txt")
 
-write.table(CEU_ordered, "/home/rachel/LCL_chemotherapy/pheno_CEU_PACL_log2_AUC.txt", col.names = T, row.names = T, sep = "/t")
+write.table(CEU_ordered, "/home/rachel/LCL_chemotherapy/pheno_CEU_CAPE_log2AUC.txt", col.names = T, row.names = T, sep = "/t")
   #Need to craete a file with no IDS or col names to use with gemma 
-        CEU_PACL_ordered_noIDs <- select(CEU_ordered, 10:16,30, contains("PACL_log2_AUC"))
-        write.table(CEU_PACL_ordered_noIDs, "/home/rachel/LCL_chemotherapy/pheno_CEU_PACL_log2_AUC_noIDs.txt", col.names = F, row.names = F, sep = "/t")
+        CEU_CAPE_ordered_noIDs <- select(CEU_ordered, 10:16,20, contains("CAPE_log2AUC"))
+        write.table(CEU_CAPE_ordered_noIDs, "/home/rachel/LCL_chemotherapy/pheno_CEU_CAPE_log2AUC_noIDs.txt", col.names = F, row.names = F, sep = "/t")
 
 #Run gemma in terminal 
 cd LCL_chemotherapy
-gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno  -p pheno_CEU_PACL_log2_AUC_noIDs.txt -gk 1 -o CEU_relationship_matrix
-Reading Files ... 
-## number of total individuals = 178
-## number of analyzed individuals = 178
-## number of covariates = 1
-## number of phenotypes = 1
-## number of total SNPs = 6577474
-## number of analyzed SNPs = 6335054
-Calculating Relatedness Matrix ... 
-Reading SNPs  ==================================================100.00%
+gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno  -p pheno_CEU_CAPE_log2AUC_noIDs.txt -gk 1 -o CEU_relationship_matrix
 
 #Make drug based phenotype files in R 
- CEU_PACL_pheno <- select(CEU_master_phenos_ordered, 1:12,42, contains("PACL"))
+START HERE ----> CEU_CAPE_pheno <- select(CEU_master_phenos_ordered, 1:12,32, contains("CAPE"))
 
 #Run univariate mixed linear GWAS in gemma using GRM
-	#For PACL use pheno log2_AUC, use rank normalized (Rn) (PACL_Rn_AUC)
+	#For CAPE use pheno AUC, use rank normalized (Rn) (CAPE_RnAUC)
 #In R	
-CEU_PACL_bestpheno_2 <- select(CEU_PACL_pheno, contains("PACL_Rn_AUC"))
-write.table(CEU_PACL_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_PACL_bestpheno_2.txt", col.names = T, row.names = F, sep = "/t")
-CEU_PACL_bestpheno_2_noIDs <- select(CEU_PACL_bestpheno_2, contains ("PACL"))
-write.table(CEU_PACL_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_PACL_bestpheno_2_noIDs.txt", col.names = F, row.names = F, sep = "/t")
+CEU_CAPE_bestpheno_2 <- select(CEU_CAPE_pheno, contains("CAPE_RnAUC"))
+write.table(CEU_CAPE_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_CAPE_bestpheno_2.txt", col.names = T, row.names = F, sep = "/t")
+CEU_CAPE_bestpheno_2_noIDs <- select(CEU_CAPE_bestpheno_2, contains ("CAPE"))
+write.table(CEU_CAPE_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_CAPE_bestpheno_2_noIDs.txt", col.names = F, row.names = F, sep = "/t")
 
 #In terminal 
-gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno -p CEU_PACL_bestpheno_2_noIDs.txt -a CEU.TGP_and_imputed.rmBAD.20130526.snp.info -k CEU_relationship_matrix_maf.cXX.txt -lmm 4 -o CEU_GWAS_ETOP
+gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno -p CEU_CAPE_bestpheno_2_noIDs.txt -a CEU.TGP_and_imputed.rmBAD.20130526.snp.info -k CEU_relationship_matrix_maf.cXX.txt -lmm 4 -o CEU_GWAS_CAPE
