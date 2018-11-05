@@ -663,3 +663,25 @@ write.table(CEU_CAPE_bestpheno_2, "/home/rachel/LCL_chemotherapy/CEU_CAPE_bestph
 
 #In terminal 
 START HERE ----> gemma -g CEU.TGP_and_imputed.rmBAD.20130526.geno -p CEU_CAPE_bestpheno_2_noIDs.txt -a CEU.TGP_and_imputed.rmBAD.20130526.snp.info -k CEU_relationship_matrix_maf.cXX.txt -lmm 4 -o CEU_GWAS_CAPE
+
+
+
+#Making plots in R
+	#Drug 1 Cisplatin
+    	#import packages
+    	library(data.table)
+    	library(dplyr)
+    	library(ggplot2)
+    	library(qqman)
+    #QQ plot 
+    GWAS_CIS <- fread("/home/rachel/LCL_chemotherapy/CEU_GWAS_CIS")
+    png(filename = "YRI_GWAS_carboplatin.qqplot.png", res=100)
+    qq(GWAS_carbo$p_wald)
+    dev.off()
+
+    ##Manhattan Plot
+    png(filename = "YRI_GWAS_carboplatin.manplot.png", res=100)
+    manhattan(GWAS_carbo, chr = "chr", bp = "ps", p = "p_wald")
+    dev.off()
+
+    ##repeat with other drugs
