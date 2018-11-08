@@ -655,6 +655,7 @@ se(pve) =0.188398
 Reading SNPs  ==================================================100.00%
 
 #Making plots in R
+-----> install.packages(qqman)
     #import packages
     library(data.table)
     library(dplyr)
