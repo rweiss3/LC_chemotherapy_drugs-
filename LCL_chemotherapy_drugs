@@ -655,17 +655,24 @@ se(pve) =0.188398
 Reading SNPs  ==================================================100.00%
 
 #Making plots in R
------> install.packages(qqman)
+install.packages(qqman)
     #import packages
     library(data.table)
     library(dplyr)
     library(ggplot2)
     library(qqman)
-    	#Error in library(qqman) : there is no package called ‘qqman’
  #CIS 
     #QQ Plot
     GWAS_CIS <- fread("/home/rachel/LCL_chemotherapy/output/CEU_GWAS_CIS.assoc.txt")
     View(GWAS_CIS)
+    png(filename = "CEU_GWAS_CIS.qqplot.png", res=100)
+    qq(GWAS_CIS$p_wald)
+    dev.off()
+    
+    #Manhattan Plot
+    png(filename = "CEU_GWAS_CIS.manplot.png", res=100)
+    manhattan(GWAS_CIS, chr = "chr", bp = "ps", p = "p_wald")
+    dev.off()
     
  
 #CARBO
