@@ -681,7 +681,7 @@ install.packages(qqman)
     View(GWAS_CARBO)
     
   
-#CAPE
+--->#CAPE
  GWAS_CAPE <- fread("/home/rachel/LCL_chemotherapy/output/CEU_GWAS_CAPE.assoc.txt")
     View(GWAS_CAPE)
     
@@ -729,7 +729,7 @@ install.packages(qqman)
     manhattan(GWAS_PACL, chr = "chr", bp = "ps", p = "p_wald")
     dev.off()
     
----> #PEME
+#PEME
 #QQ Plot
     GWAS_PEME <- fread("/home/rachel/LCL_chemotherapy/output/CEU_GWAS_PEME.assoc.txt")
     View(GWAS_PEME)
