@@ -704,3 +704,11 @@ install.packages(qqman)
 #QQ Plot
     GWAS_PACL <- fread("/home/rachel/LCL_chemotherapy/output/CEU_GWAS_PACL.assoc.txt")
     View(GWAS_PACL)
+    png(filename = "CEU_GWAS_PACL.qqplot.png", res=100)
+    qq(GWAS_PACL$p_wald)
+    dev.off()
+    
+    #Manhattan Plot
+    png(filename = "CEU_GWAS_PACL.manplot.png", res=100)
+    manhattan(GWAS_PACL, chr = "chr", bp = "ps", p = "p_wald")
+    dev.off()
