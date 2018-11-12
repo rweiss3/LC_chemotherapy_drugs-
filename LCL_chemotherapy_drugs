@@ -731,7 +731,7 @@ install.packages(qqman)
     
 ---> #PEME
 #QQ Plot
-    GWAS_PACL <- fread("/home/rachel/LCL_chemotherapy/output/CEU_GWAS_PEME.assoc.txt")
+    GWAS_PEME <- fread("/home/rachel/LCL_chemotherapy/output/CEU_GWAS_PEME.assoc.txt")
     View(GWAS_PEME)
     png(filename = "CEU_GWAS_PEME.qqplot.png", res=100)
     qq(GWAS_PEME$p_wald)
