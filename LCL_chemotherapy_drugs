@@ -699,6 +699,14 @@ install.packages(qqman)
 #QQ Plot
     GWAS_ETOP <- fread("/home/rachel/LCL_chemotherapy/output/CEU_GWAS_ETOP.assoc.txt")
     View(GWAS_ETOP)
+    png(filename = "CEU_GWAS_ETOP.qqplot.png", res=100)
+    qq(GWAS_ETOP$p_wald)
+    dev.off()
+    
+    #Manhattan Plot
+    png(filename = "CEU_GWAS_ETOP.manplot.png", res=100)
+    manhattan(GWAS_ETOP, chr = "chr", bp = "ps", p = "p_wald")
+    dev.off()
     
    #PACL
 #QQ Plot
