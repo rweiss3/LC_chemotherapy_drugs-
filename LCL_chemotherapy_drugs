@@ -661,7 +661,7 @@ install.packages(qqman)
     library(dplyr)
     library(ggplot2)
     library(qqman)
----> #CIS 
+  #CIS 
     #QQ Plot
     GWAS_CIS <- fread("/home/rachel/LCL_chemotherapy/output/CEU_GWAS_CIS.assoc.txt")
     View(GWAS_CIS)
@@ -675,15 +675,30 @@ install.packages(qqman)
     dev.off()
     
  
---->#CARBO
+#CARBO
 #QQ Plot
     GWAS_CARBO <- fread("/home/rachel/LCL_chemotherapy/output/CEU_GWAS_CARBO.assoc.txt")
     View(GWAS_CARBO)
+    png(filename = "CEU_GWAS_CARBO.qqplot.png", res=100)
+    qq(GWAS_CARBO$p_wald)
+    dev.off()
     
+    #Manhattan Plot
+    png(filename = "CEU_GWAS_CARBO.manplot.png", res=100)
+    manhattan(GWAS_CARBO, chr = "chr", bp = "ps", p = "p_wald")
+    dev.off()
   
---->#CAPE
+#CAPE
  GWAS_CAPE <- fread("/home/rachel/LCL_chemotherapy/output/CEU_GWAS_CAPE.assoc.txt")
     View(GWAS_CAPE)
+    png(filename = "CEU_GWAS_CAPE.qqplot.png", res=100)
+    qq(GWAS_CAPE$p_wald)
+    dev.off()
+    
+    #Manhattan Plot
+    png(filename = "CEU_GWAS_CAPE.manplot.png", res=100)
+    manhattan(GWAS_CAPE, chr = "chr", bp = "ps", p = "p_wald")
+    dev.off()
     
  #DAUNO
 #QQ Plot
@@ -698,10 +713,18 @@ install.packages(qqman)
     manhattan(GWAS_DAUNO, chr = "chr", bp = "ps", p = "p_wald")
     dev.off()
     
- ---> #ARAC
+ #ARAC
 #QQ Plot
     GWAS_ARAC <- fread("/home/rachel/LCL_chemotherapy/output/CEU_GWAS_ARAC.assoc.txt")
     View(GWAS_ARAC)
+    png(filename = "CEU_GWAS_ARAC.qqplot.png", res=100)
+    qq(GWAS_ARAC$p_wald)
+    dev.off()
+    
+    #Manhattan Plot
+    png(filename = "CEU_GWAS_ARAC.manplot.png", res=100)
+    manhattan(GWAS_ARAC, chr = "chr", bp = "ps", p = "p_wald")
+    dev.off()
 
  #ETOP
 #QQ Plot
