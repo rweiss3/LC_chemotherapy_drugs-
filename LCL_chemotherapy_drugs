@@ -764,3 +764,24 @@ install.packages(qqman)
     png(filename = "CEU_GWAS_PEME.manplot.png", res=100)
     manhattan(GWAS_PEME, chr = "chr", bp = "ps", p = "p_wald")
     dev.off()
+    
+    
+    
+#Run Predixcan
+     # For Predixcan need to make 22 dosage files and put into directory 
+     # Make directory 
+     	mkdir dosages 
+     #Convert files from bimbam format to dosage format:
+        #use python script: BIMBAM_to_PX_dosages.py
+            #input: geno file and snp info file, both in BIMBAM format
+                #input files:
+                geno: CEU.TGP_and_imputed.rmBAD.20130526.geno
+                snp: CEU.TGP_and_imputed.rmBAD.20130526.snp.info
+            #Run: 
+                python 24_BIMBAM_to_PX_dosages.py --anno CEU.TGP_and_imputed.rmBAD.20130526.snp.info --BIMBAM CEU.TGP_and_imputed.rmBAD.20130526.geno --output dosages.txt
+            #output: combined file in dosage format, which is sebsquently split into 22 files
+            #use awk command: awk '$1 == #' dosages.txt > chr#.txt, where # is 1 through 22, run 22 times
+                #output files, chr1-22:
+                predixcan_dosages/chr#.txt
+                #must zip files for PrediXcan to run, use gzip
+
