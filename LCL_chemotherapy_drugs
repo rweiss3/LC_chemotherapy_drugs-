@@ -786,4 +786,8 @@ install.packages(qqman)
                 #output files, chr1-22:
 		#must zip files for PrediXcan to run using gzip 
 			gzip chr22
-	
+#Make a Sample File in R 
+        #Make file with FID and IID only (in correct order corresponding to columns of individuals in geno file)
+            samples <- fam[1:2]
+            write.table(samples, file = "samples.txt", sep = "\t", row.names = F, col.names = F, quote = F)
+           
