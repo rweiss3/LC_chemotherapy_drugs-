@@ -778,10 +778,12 @@ install.packages(qqman)
                 geno: CEU.TGP_and_imputed.rmBAD.20130526.geno
                 snp: CEU.TGP_and_imputed.rmBAD.20130526.snp.info
             #Run: 
+	    python BIMBAM_to_PX_dosages.py --anno CEU.TGP_and_imputed.rmBAD.20130526.snp.info --BIMBAM CEU.TGP_and_imputed.rmBAD.20130526.geno --output dosages.txt
                 python 24_BIMBAM_to_PX_dosages.py --anno CEU.TGP_and_imputed.rmBAD.20130526.snp.info --BIMBAM CEU.TGP_and_imputed.rmBAD.20130526.geno --output dosages.txt
             #output: combined file in dosage format, which is sebsquently split into 22 files
             #use awk command: awk '$1 == #' dosages.txt > chr#.txt, where # is 1 through 22, run 22 times
+	     awk '$1 == 22' dosages.txt > chr22
                 #output files, chr1-22:
-                predixcan_dosages/chr#.txt
-                #must zip files for PrediXcan to run, use gzip
-
+		#must zip files for PrediXcan to run using gzip 
+			gzip chr22
+	
