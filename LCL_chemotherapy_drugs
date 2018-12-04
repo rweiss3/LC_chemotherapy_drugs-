@@ -791,3 +791,6 @@ install.packages(qqman)
             samples <- fam[1:2]
             write.table(samples, file = "samples.txt", sep = "\t", row.names = F, col.names = F, quote = F)
            
+#Make new pheno files in R with FID, IID, and Pheno 
+	#CIS 
+	CEU_cisplatin_predpheno <- select(CEU_CIS_bestpheno, 1:2,13)
