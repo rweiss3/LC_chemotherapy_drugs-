@@ -792,13 +792,40 @@ install.packages(qqman)
             write.table(samples, file = "samples.txt", sep = "\t", row.names = F, col.names = F, quote = F)
            
 #Make new pheno files in R with FID, IID, and Pheno 
-	#CIS 
+#CIS 
 	CEU_cisplatin_predpheno <- select(CEU_CIS_bestpheno, 1:2,13)
-  # Then run predican python script 
+	write.table(CEU_cisplatin_predpheno, "/home/rachel/LCL_chemotherapy/prediXcan_phenos/CEU_cisplatin_predpheno.txt", col.names = T, row.names = F, sep = "\t", quote = FALSE)
+#CARBO
+	CEU_carboplatin_predpheno <- select(CEU_CARBO_bestpheno, 1:2,13)
+	write.table(CEU_carboplatin_predpheno, "/home/rachel/LCL_chemotherapy/prediXcan_phenos/CEU_carboplatin_predpheno.txt", col.names = T, row.names = F, sep = "\t", quote = FALSE)
+#CAPE
+	CEU_capecitabine_predpheno <- select(CEU_CAPE_ordered_noIDs, 1:2,8)
+	write.table(CEU_capecitabine_predpheno, "/home/rachel/LCL_chemotherapy/prediXcan_phenos/CEU_capecitabine_predpheno.txt", col.names = T, row.names = F, sep = "\t", quote = FALSE)
+#DAUNO
+	CEU_daunorubicin_predpheno <- select(CEU_DAUNO_ordered_noIDs, 1:2,8)
+	write.table(CEU_daunorubicin_predpheno, "/home/rachel/LCL_chemotherapy/prediXcan_phenos/CEU_daunorubicin_predpheno.txt", col.names = T, row.names = F, sep = "\t", quote = FALSE)
+#PEME
+	CEU_pemetrexed_predpheno <- select(CEU_PEME_ordered_noIDs, 1:2,8)
+	write.table(CEU_pemetrexed_predpheno, "/home/rachel/LCL_chemotherapy/prediXcan_phenos/CEU_pemetrexed_predpheno.txt", col.names = T, row.names = F, sep = "\t", quote = FALSE)
+#ARAC
+	CEU_arac_predpheno <- select(CEU_ARAC_bestpheno, 1:2,13)
+	write.table(CEU_arac_predpheno, "/home/rachel/LCL_chemotherapy/prediXcan_phenos/CEU_arac_predpheno.txt", col.names = T, row.names = F, sep = "\t", quote = FALSE)
+#ETOP
+	CEU_etoposide_predpheno <- select(CEU_ETOP_ordered_noIDs, 1:2,8)
+	write.table(CEU_etoposide_predpheno, "/home/rachel/LCL_chemotherapy/prediXcan_phenos/CEU_etoposide_predpheno.txt", col.names = T, row.names = F, sep = "\t", quote = FALSE)
+#PACL
+	CEU_paclitaxel_predpheno <- select(CEU_PACL_ordered_noIDs, 1:2,8)
+	write.table(CEU_paclitaxel_predpheno, "/home/rachel/LCL_chemotherapy/prediXcan_phenos/CEU_paclitaxel_predpheno.txt", col.names = T, row.names = F, sep = "\t", quote = FALSE)
+
+# Then run predican python script for each of the drugs and db 
     #Predicting/Imputing Expression:
-            PrediXcan.py --predict --dosages dosagefile_path --dosages_prefix chr --samples samples_file --weights prediction_db --output_prefix results/tissue
-            PrediXcan.py --predict --dosages /home/rachel/LCL_chemotherapy/predixcan_dosages --dosages_prefix chr --samples /home/rachel/LCL_chemotherapy/samples.txt --weights /home/wheelerlab3/Data/PrediXcan_db/GTEx-V6p-HapMap-2016-09-08/TW_Adipose_Subcutaneous_0.5.db --output_prefix CEU_results_Adipose_Subcutaneous
-        
+            PrediXcan.py --predict --dosages /home/rachel/LCL_chemotherapy/dosages --dosages_prefix chr --samples /home/rachel/LCL_chemotherapy/samples.txt --weights /home/wheelerlab3/Data/PrediXcan_db/GTEx-V6p-HapMap-2016-09-08/TW_Adipose_Subcutaneous_0.5.db --output_prefix CEU_results_Adipose_Subcutaneous
+--------------> Traceback (most recent call last):
+		File "/usr/local/bin/PrediXcan.py", line 7, in <module>
+			import numpy as np
+		ImportantError: No module named numpy 
+	
 	#Run for all 49 prediction databases to produce a total of 49 output files
             #first 44 in /home/wheelerlab3/Data/PrediXcan_db/GTEx-V6p-HapMap-2016-09-08/
+	    	#use files with .db 
             #last 5 in /home/angela/MESA_dbs/
